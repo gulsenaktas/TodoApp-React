@@ -1,0 +1,86 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: #cca98a;
+  font-family: "Shadows Into Light", cursive;
+  font-size: 25px;
+}
+.clips {
+  position: absolute;
+  width: 140px;
+  height: 135px;
+  left: calc(50vw - 270px);
+  top: 2%;
+  background-image: url(../src/img/bant.png);
+  background-size: 10rem;
+  background-repeat: no-repeat;
+}
+.wrapper {
+  max-width: 450px;
+  margin: 6vh auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+  border: 1px solid black;
+}
+.form-elements {
+  display: flex;
+  width: 400px;
+  margin: auto;
+}
+.add-button {
+  border: none;
+  background: none;
+}
+.add-button:focus {
+  outline: none;
+}
+.title {
+  color: #cca98a;
+}
+.lists {
+  width: 90%;
+  margin: auto;
+}
+.todo {
+  border-bottom: 1px solid black !important;
+}
+.completed {
+  text-decoration: line-through;
+  color: rgb(196, 196, 196);
+}
+input[type="text"],
+input[type="text"]:focus {
+  color: rgb(0, 0, 0);
+  border-style: none;
+  border-bottom: 1px solid black;
+  background: transparent;
+  max-width: 400px;
+  box-shadow: none;
+}
+.icons {
+  width: 50px;
+  display: flex;
+  justify-content: space-between;
+  color: rgb(95, 95, 95);
+}
+.icon:hover {
+  cursor: pointer;
+}
+.remove:hover {
+  color: rgb(0, 0, 0);
+}
+.todos li {
+  background: transparent;
+  border-style: none;
+}
+.delete {
+  cursor: pointer;
+}
+.none {
+  display: none !important;
+}
