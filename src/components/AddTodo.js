@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-// import { nanoid } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
 import { addTodo, getTodos } from '../redux/todoListSlice'
 import { todoListRef } from "../firebase"

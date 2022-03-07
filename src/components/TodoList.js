@@ -14,7 +14,6 @@ function TodoList() {
 
   const updateTodos = () => {
     todoListRef.once('value', (snapshot) => {
-
       dispatch(getTodos(snapshot.val()))
     }, (errorObject) => {
       console.log('The read failed: ' + errorObject.name);
@@ -36,28 +35,33 @@ function TodoList() {
   return (
     <div>
       <ul className="lists list-group todos">
-        {Object.keys(todoList).map(id =>
-          < li
-            key={id}
-            className={`todo list-group-item d-flex justify-content-between align-items-center ${todoList[id].completed ? 'completed' : ''}`}>
+        {
+          todoList ?
+            Object.keys(todoList).map(id =>
+              < li
+                key={id}
+                className={`todo list-group-item d-flex justify-content-between align-items-center ${todoList[id].completed ? 'completed' : ''}`}>
 
-            <span>{todoList[id].text}</span>
-            <div className='icons'>
-              <div
-                className={`check icon ${todoList[id].completed ? 'completed' : ''}`}
-                onClick={() => handleComplete(id, todoList[id].completed)}
-              >
-                {Check}
-              </div>
-              <div
-                onClick={() => handleRemove(id)}
-                className='remove icon'
-              >
-                {removeIcon}
-              </div>
-            </div>
-          </li>
-        )}
+                <span>{todoList[id].text}</span>
+                <div className='icons'>
+                  <div
+                    className={`check icon ${todoList[id].completed ? 'completed' : ''}`}
+                    onClick={() => handleComplete(id, todoList[id].completed)}
+                  >
+                    {Check}
+                  </div>
+                  <div
+                    onClick={() => handleRemove(id)}
+                    className='remove icon'
+                  >
+                    {removeIcon}
+                  </div>
+                </div>
+              </li>
+            )
+            :
+            <p className='empty-list'>Oh! There is no to-do yet.</p>
+        }
       </ul>
     </div >
   )

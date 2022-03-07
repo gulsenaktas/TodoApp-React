@@ -84,3 +84,6 @@ input[type="text"]:focus {
 .none {
   display: none !important;
 }
+.empty-list {
+  text-align: center;
+}
