@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { nanoid } from '@reduxjs/toolkit'
+// import { nanoid } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
-import { addTodo } from '../redux/todoListSlice'
+import { addTodo, getTodos } from '../redux/todoListSlice'
+import { todoListRef } from "../firebase"
 
 
 function AddTodo() {
@@ -12,12 +13,21 @@ function AddTodo() {
     if (!text) return;
     e.preventDefault()
 
-    dispatch(addTodo({ id: nanoid(), text: text, completed: false }))
-    setText(' ')
+    dispatch(addTodo({ text: text, completed: false }))
+
+    todoListRef.once('value', (snapshot) => {
+      dispatch(getTodos(snapshot.val()))
+    }, (errorObject) => {
+      console.log('The read failed: ' + errorObject.name);
+    });
+    setText('')
   }
+
   return (
     <div>
-      <form onSubmit={handleSubmit} className="text-center my-4">
+      <form
+        onSubmit={handleSubmit}
+        className="text-center my-4">
         <label>Add a new todo...</label>
         <div className='form-elements'>
           <input

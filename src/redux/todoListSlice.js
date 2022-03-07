@@ -1,56 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { todoListRef } from "../firebase"
+
 
 export const todoListSlice = createSlice({
   name: 'todoList',
   initialState: {
-    data: [
-      {
-        id: 1,
-        text: 'play game',
-        completed: false
-      },
-      {
-        id: 2,
-        text: 'play game',
-        completed: false
-      },
-      {
-        id: 3,
-        text: 'play game',
-        completed: false
-      }
-    ],
+    data: [],
   },
   reducers: {
+    getTodos: (state, action) => {
+      state.data = action.payload
+    },
     addTodo: (state, action) => {
-      state.data.push(action.payload)
+      todoListRef.push(action.payload)
     },
     removeTodo: (state, action) => {
-      const id = action.payload
-      const filtered = state.data.filter(item => item.id !== id)
-      state.data = filtered
+      todoListRef.child(action.payload).remove()
     },
     completedTodo: (state, action) => {
-      const id = action.payload
-      // const item = state.data.find(item => item.id === id)
-      // item.completed = !item.completed
-      const newdata = state.data.map(item => {
-        if (item.id === id) {
-          const todo = { ...item, completed: !item.completed }
-          return todo
-        } else {
-          return item
-        }
-      })
-      state.data = newdata
-    },
-    searchTodo: (state, action) => {
-      const filtered = state.data.filter(item => item.text.toLowerCase().includes(action.payload))
-        .forEach((todo) => todo.classList.add("none"));
+      todoListRef.child(action.payload.id).update({ completed: !action.payload.completed })
+
     }
   },
 })
 
-export const { addTodo, removeTodo, completedTodo, searchTodo } = todoListSlice.actions
+export const { addTodo, removeTodo, completedTodo, getTodos } = todoListSlice.actions
 
 export default todoListSlice.reducer
