@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { todoListRef } from "../firebase"
 
 
 export const todoListSlice = createSlice({
@@ -9,21 +8,19 @@ export const todoListSlice = createSlice({
   },
   reducers: {
     getTodos: (state, action) => {
-      state.data = action.payload
-    },
-    addTodo: (state, action) => {
-      todoListRef.push(action.payload)
+      state.data.push(action.payload)
     },
     removeTodo: (state, action) => {
-      todoListRef.child(action.payload).remove()
+      const filtered = state.data.filter(e => e.id !== action.payload)
+      state.data = filtered
     },
     completedTodo: (state, action) => {
-      todoListRef.child(action.payload.id).update({ completed: !action.payload.completed })
-
+      const toggleTodo = state.data.find(e => e.id === action.payload)
+      toggleTodo.completed = !toggleTodo.completed
     }
   },
 })
 
-export const { addTodo, removeTodo, completedTodo, getTodos } = todoListSlice.actions
+export const { getTodos, removeTodo, completedTodo, } = todoListSlice.actions
 
 export default todoListSlice.reducer

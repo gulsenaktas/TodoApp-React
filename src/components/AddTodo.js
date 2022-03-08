@@ -1,24 +1,21 @@
 import React, { useState } from 'react'
+import { nanoid } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux'
-import { addTodo, getTodos } from '../redux/todoListSlice'
-import { todoListRef } from "../firebase"
+import { db } from "../firebase"
+import { setDoc, doc } from "firebase/firestore"
 
 
 function AddTodo() {
   const dispatch = useDispatch()
   const [text, setText] = useState('')
 
-  const handleSubmit = (e) => {
-    if (!text) return;
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!text) return;
 
-    dispatch(addTodo({ text: text, completed: false }))
-
-    todoListRef.once('value', (snapshot) => {
-      dispatch(getTodos(snapshot.val()))
-    }, (errorObject) => {
-      console.log('The read failed: ' + errorObject.name);
-    });
+    const docRef = doc(db, "todo-list", nanoid())
+    const payload = { text: text, completed: false }
+    await setDoc(docRef, payload)
     setText('')
   }
 
