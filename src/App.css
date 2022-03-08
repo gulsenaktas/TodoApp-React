@@ -87,3 +87,19 @@ input[type="text"]:focus {
 .empty-list {
   text-align: center;
 }
+
+@media only screen and (max-width: 768px) {
+  .wrapper {
+    width: 90vw;
+  }
+  .form-elements {
+    width: 100%;
+    display: block;
+  }
+  .form-control {
+    width: 80%;
+  }
+  .clips {
+    left: calc(25vw - 110px);
+  }
+}
